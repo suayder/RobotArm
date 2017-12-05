@@ -7,11 +7,15 @@
 
 RobotArm object;
 GLdouble obsX=0.5, obsY=0.5, obsZ=0.5;
+
 bool flagAux = true;
+bool flagGet = true;
+bool flagHandIswithObject = false;
 
 void render(void){
 
     glClear(GL_COLOR_BUFFER_BIT);
+
 
     glRotatef(-90,1.0f,0.0f,0.0f);
 
@@ -95,7 +99,7 @@ void SpecialKeys(int key, int x, int y){
                         break;
     }
 
-    (flagAux)?object.drawArm(70):object.moveObject(100);
+    (!flagGet)?object.moveObject(100):((flagAux)?object.drawArm(70):object.drawArm(100));
 
     glutSwapBuffers();
 
@@ -128,14 +132,30 @@ void KeyBoard(unsigned char key, int x, int y){
         object.getArm().subAngle(3);
         break;
     case 32:
+        if((object.calcDistanceHandToObject()<=0.2 && flagAux) || !flagGet)
+            flagGet = !flagGet;
         flagAux = !flagAux;
+        break;
 
     default:
         break;
     }
 
     glClear(GL_COLOR_BUFFER_BIT);
-    (flagAux)?object.drawArm(70):object.moveObject(100);
+
+
+    if(!flagGet){
+        object.moveObject(100);
+        flagHandIswithObject = true;
+    }
+    else{
+        if(flagAux && flagGet && flagHandIswithObject){
+            object.dropObject();
+            flagHandIswithObject = false;
+        }
+        else
+            (flagAux)?object.drawArm(70):object.drawArm(100);
+    }
 
     glutSwapBuffers();
 

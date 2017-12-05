@@ -6,9 +6,8 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 #include <GL/gl.h>
-#include <cmath>
 
-#include <QDebug>
+#include <cmath>
 
 #define PI 3.14159265
 
@@ -20,11 +19,9 @@ typedef struct{
     const float stacks = 50.0; //number of subdivisions along z axis
     GLfloat angle;
     void sumAngle(GLfloat value){
-        //std::cout<<"Angle:"<<angle<<std::endl;
         angle +=value;
     }
     void subAngle(GLfloat value){
-        //std::cout<<"Angle:"<<angle<<std::endl;
         angle-=value;
     }
 }typeArm;
@@ -35,12 +32,10 @@ class RobotArm
 public:
     RobotArm();
     void drawArm(GLfloat angle);
-    void drawForeArm(typeArm& arm);
-    void drawBase();
-    void drawJoin();
-    void drawHand(GLfloat angle);
     void moveObject(GLfloat angle);
-    void moveDrawHand(GLfloat angle);
+    void calcPosHand();
+    GLfloat calcDistanceHandToObject();//Calculate the distance between hand and object
+    void dropObject();
 
     typeArm &getArm();
 
@@ -49,6 +44,12 @@ public:
     typeArm &getForeArm2();
 
 private:
+    void drawBase();
+    void drawJoin();
+    void drawHand(GLfloat angle);
+    void moveDrawHand(GLfloat angle);
+    void drawForeArm(typeArm& arm);
+
     typeArm arm;
     typeArm foreArm1;
     typeArm foreArm2;
