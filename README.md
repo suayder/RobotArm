@@ -2,7 +2,9 @@
 
 ### Robot arm using opengl
 
-#### It's funcitions is moving and get a object placed in a position
+#### A simple implementation using opengl to drive a robotic arm, its functions are to pick up an object and move it to a certain position. The bellow image ilustrate the application.
+
+![application running](img/robotArm.png) 
 
 > To use you need opengl, glut and glu instaled
 ```
